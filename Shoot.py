@@ -164,12 +164,6 @@ class Player(pygame.sprite.Sprite):
 			self.speedx = -8
 		if keystate[pygame.K_RIGHT]:
 			self.speedx = 8
-		if keystate[pygame.K_UP]:
-			self.speedy = -8
-		if keystate[pygame.K_DOWN]:
-			self.speedy = 8
-		if keystate[pygame.K_SPACE]:
-			self.shot()
 		self.rect.x += self.speedx
 		self.rect.y += self.speedy
 		if self.rect.right > WIDTH:
@@ -178,8 +172,6 @@ class Player(pygame.sprite.Sprite):
 			self.rect.left = 0
 		if self.rect.top < 0:
 			self.rect.top = 0
-		if self.rect.bottom > HEIGHT:
-			self.rect.bottom = HEIGHT
 		if self.hidden and pygame.time.get_ticks() - self.hide_timer > 1000:
 			self.hidden = False
 			self.rect.centerx = WIDTH / 2
@@ -306,7 +298,7 @@ class Power(pygame.sprite.Sprite):
 		
 
 pygame.mixer.music.play(loops=-1)
-#game while
+# game while
 game_over = True
 running = True
 while running:
@@ -327,6 +319,11 @@ while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
+		elif event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_SPACE:
+				player.shot()
+			if event.key == pygame.K_q:
+				running = False
 
 	all_sprites.update()
 
